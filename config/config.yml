@@ -1,0 +1,6 @@
+applicationName: AnthonyBarrettiSite
+
+http:
+  rootPath: "/*"
+  port: 8080
+  adminPort: 8081
