@@ -1,11 +1,8 @@
-FROM alpine
+FROM openjdk:8-jdk
 WORKDIR /root/anthony-barretti
-COPY src/main/java/AnthonyBarrettiApplication.java /root/anthony-barretti
+COPY ./ /root/anthony-barretti
 
-RUN apk add openjdk11
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV PATH $PATH:$JAVA_HOME/bin
+RUN ./gradlew --no-daemon clean build installShadowDist -x test
 
-RUN javac src/main/java/AnthonyBarrettiApplication.java
-
-ENTRYPOINT java /src/main/java/AnthonyBarrettiApplication
+EXPOSE 8080
+ENTRYPOINT java -jar build/install/AnthonyBarretti-shadow/lib/AnthonyBarretti-1.0-SNAPSHOT-all.jar server config/config.yml
